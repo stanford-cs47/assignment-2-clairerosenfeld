@@ -1,25 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, Image, Platform, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, Platform, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Images, Profiles } from './App/Themes';
 
-
-/*class ActionItems extends React.Component{
-  render(){
-    return(
-      <View 
-        style = {{
-          flexDirection: 'row',
-        }}>
-        <View style = {{        
-          width: 40,
-          height: 40,
-          borderRadius: 40/2,
-          backgroundColor: 'white',}} />
-        <Image style = {styles.buttonpic} source={require('./App/Images/super-like.png')} /> 
-      </View>
-    );
-  }
-}*/
 
 export default class App extends React.Component {
   constructor() {
@@ -39,10 +21,13 @@ export default class App extends React.Component {
       <SafeAreaView style = {styles.container}>
         <View style={styles.container} > 
           <View style ={styles.navbar} >
-            <Image style = {[styles.navpic, { tintColor: '#C5C5C5'}]} source={require('./App/Images/gear.png')} /> 
-            <Image style = {styles.navpic} source={require('./App/Images/tinder-logo.png')} /> 
-            <Image style = {[styles.navpic, { tintColor: '#C5C5C5'}]} source={require('./App/Images/chatting.png')} /> 
-
+            <TouchableOpacity onPress={this._onPressButton} >
+              <Image style = {[styles.navicon, { tintColor: '#C5C5C5'}]} source={require('./App/Images/gear.png')} /> 
+            </TouchableOpacity>
+            <Image style = {styles.navicon} source={require('./App/Images/tinder-logo.png')} /> 
+            <TouchableOpacity onPress={this._onPressButton} >
+              <Image style = {[styles.navicon, { tintColor: '#C5C5C5'}]} source={require('./App/Images/chatting.png')} /> 
+            </TouchableOpacity>
           </View> 
 
           <View style = {styles.center}>
@@ -50,37 +35,37 @@ export default class App extends React.Component {
               <Image style = {styles.profpic} source={this.state.profileImage} />  
               <Text style={ { fontWeight: 'bold', fontSize: 24, marginLeft: 10 }} >
                 {this.state.name + ", "} 
-                <Text style={ {fontWeight: 'normal', marginLeft: 20 }}>
+                <Text style={ {fontWeight: 'normal', marginLeft: 10 }}>
                 {this.state.age}
                 </Text>
               </Text>  
-              <Text style={ { color: 'gray', fontSize: 16, marginLeft: 10  } }>{this.state.occupation}</Text>
+              <Text style={ { color: 'gray', fontSize: 16, marginLeft: 10, paddingBottom: 10  } }>{this.state.occupation}</Text>
             </View>
           </View>
 
-
           <View style ={styles.buttonsbar} >
-            <View style = {styles.smallCircle}>
-              <Image style = {styles.buttonpic} source={require('./App/Images/rewind.png')} />
-            </View> 
-            <View style = {styles.largeCircle}>
-              <Image style = {styles.buttonpic} source={require('./App/Images/nope.png')} /> 
-            </View>
-            <View style = {styles.smallCircle}>
-              <Image style = {styles.buttonpic} source={require('./App/Images/boost.png')} /> 
-            </View>
-            <View style = {styles.largeCircle}>
-              <Image style = {styles.buttonpic} source={require('./App/Images/like.png')} /> 
-            </View>
-            <View style = {styles.smallCircle}>
-              <Image style = {styles.buttonpic} source={require('./App/Images/super-like.png')} /> 
-            </View>
+            <TouchableOpacity onPress={this._onPressButton} style={styles.smallcircle}>
+              <Image style = {styles.buttonicon} source={require('./App/Images/rewind.png')} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this._onPressButton} style={styles.largecircle}>
+              <Image style = {styles.buttonicon} source={require('./App/Images/nope.png')} /> 
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this._onPressButton} style={styles.smallcircle}>
+              <Image style = {styles.buttonicon} source={require('./App/Images/boost.png')} /> 
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this._onPressButton} style={styles.largecircle}>
+              <Image style = {styles.buttonicon} source={require('./App/Images/like.png')} /> 
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this._onPressButton} style={styles.smallcircle}>
+              <Image style = {styles.buttonicon} source={require('./App/Images/super-like.png')} /> 
+            </TouchableOpacity>
           </View>         
         </View>
       </SafeAreaView>
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -92,82 +77,84 @@ const styles = StyleSheet.create({
   },
 
   navbar: {
-    flex: 1,
+    flex: .5,
     flexDirection: 'row',
     height: Platform.OS==='ios'? 44: 56,
-    borderBottomColor: 'black',
+    marginTop: Platform.OS==='ios'? 5: 20,
+    borderBottomColor: '#C5C5C5',
     borderBottomWidth: 1,
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent:'space-between',
-    paddingTop: '3%',
   },
 
-  navpic: {
-    width: '30%',
-    height: '30%',
+  navicon: {
+    width: Dimensions.get('window').width * .2,
+    height: '60%',
     resizeMode: 'contain',
   },
 
   center:{
-    flex:3,
+    flex: 4,
     flexDirection: 'column',
     alignItems: 'stretch', 
     justifyContent: 'center',
-
   },
 
   profile: {
+    flexDirection: 'column',
     backgroundColor: 'white',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     borderWidth: 1,
     borderColor: '#C5C5C5',
     justifyContent: 'center',
+    alignItems: 'flex-start',
     marginHorizontal: '5%',
   },
 
   profpic: {
     justifyContent: 'center',
-    width: '100%',
-    marginBottom: '2%'
+    width: Dimensions.get('window').width * .9 -2, //to account for 5% margin and 1px border on either side
+    height: Dimensions.get('window').width * .9 -2,
+    marginBottom: '2%',
+    alignSelf: 'center'
   },
 
   buttonsbar: {
-    flex: 1,
+    flex: .5,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent:'center',
+    marginBottom: '5%'
   },
 
-  buttonpic:{
+  buttonicon:{
     alignSelf: 'center',
     width: '50%',
     height: '50%',
     resizeMode: 'center',
   },
 
-  smallCircle:{
+  smallcircle:{
     width: 40,
     height: 40,  
     borderRadius: 40/2,
     backgroundColor: 'white',
     alignSelf: 'center',
-    marginHorizontal: '2%',
     alignItems: 'center',
-    justifyContent: 'center',
-
+    justifyContent: 'center',   
+    marginHorizontal: '2%',
   },
   
-  largeCircle:{
-    width: 60,
-    height: 60,  
-    borderRadius: 60/2,
+  largecircle:{
+    width: 50,
+    height: 50,  
+    borderRadius: 50/2,
     backgroundColor: 'white',
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: '2%',
-
   },
 
 });
